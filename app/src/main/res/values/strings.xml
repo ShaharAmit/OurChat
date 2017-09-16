@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Our Chat</string>
+
+    <string name="appwidget_text">STICKY</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Sign In</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="student_mail">Student mail</string>
+    <string name="id">ID</string>
+    <string name="title">title</string>
+    <string name="logo">logo</string>
+    <string name="DateTime">23/12/1992 16:30</string>
+    <string name="java">Java</string>
+    <string name="ex01">ex01</string>
+    <string name="add_event">add event</string>
+    <string name="_16_30">16:30</string>
+    <string name="signout">SignOut</string>
+    <string name="deleteaccount">DeleteAccount</string>
+    <string name="add_course">Add Course</string>
+    <string name="new_course_name">new course name</string>
+    <string name="empty">Empty</string>
+
+
+</resources>

@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "628181043445",
+    "firebase_url": "https://ourchat-373c0.firebaseio.com",
+    "project_id": "ourchat-373c0",
+    "storage_bucket": "ourchat-373c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628181043445:android:f80ba76a28845b92",
+        "android_client_info": {
+          "package_name": "shahar.shenkar.ourchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628181043445-k2mgsq1e3blb6ginup0apdrqn51ohmfc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "shahar.shenkar.ourchat",
+            "certificate_hash": "d10707288041bfef67994abd5a632b953f9ac805"
+          }
+        },
+        {
+          "client_id": "628181043445-vki5q6rfipf03klm3dc8mkn6ack47atb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDshB1C0u9hsUArWEw8s8Xvn2_8Cb9vbUs"
+        },
+        {
+          "current_key": "AIzaSyBud-ZRAZ-ydOC6NUgP02Zj85O-hPjaZcM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628181043445-vki5q6rfipf03klm3dc8mkn6ack47atb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
