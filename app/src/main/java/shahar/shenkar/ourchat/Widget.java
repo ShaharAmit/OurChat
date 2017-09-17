@@ -10,17 +10,20 @@ import android.widget.RemoteViews;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import shahar.shenkar.ourchat.Utils.AsyncHandler;
 import shahar.shenkar.ourchat.Utils.UiHandler;
+import shahar.shenkar.ourchat.objects.Model;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class Widget extends AppWidgetProvider {
     private static final String PREF_PREFIX_KEY = "appwidget_";
+    Model model = Model.getInstance();
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
@@ -50,24 +53,34 @@ public class Widget extends AppWidgetProvider {
             AsyncHandler.post(() -> {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 widgetText[0] = prefs.getString(PREF_PREFIX_KEY + appWidgetId, "example");
+                UiHandler.post(()->{
+                    DatabaseReference ref = model.database.getReference().child("Institution/"+model.institution+"/"+widgetText[0]+"/groups/Main/messages");
+                    System.out.println(ref.toString());
+                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String temp = "";
+                            for (DataSnapshot messages: dataSnapshot.getChildren()){
+                                for (DataSnapshot message: messages.getChildren()){
+                                    if (message.getKey().equals("messageText")) {
+                                        System.out.println(messages.getKey() + " " + messages.getValue());
+                                        temp = message.getValue().toString();
+                                    }
+                                }
+                            }
+                            views.setTextViewText(R.id.appwidget_text, widgetText[0] +": "+temp);
+                            appWidgetManager.updateAppWidget(appWidgetId, views);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                });
             });
-            FirebaseDatabase.getInstance().getReference().child("Institution/Shenkar/Java/groups/Main/messages").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String temp = "";
-                    for (DataSnapshot message: dataSnapshot.getChildren()){
-                        temp = message.getValue().toString();
-                    }
-                    views.setTextViewText(R.id.appwidget_text, widgetText[0] +": "+temp);
-                    appWidgetManager.updateAppWidget(appWidgetId, views);
 
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
 
         }
 

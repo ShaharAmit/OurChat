@@ -48,7 +48,6 @@ public class ChatFragment extends Fragment {
 
 
         ref = model.database.getReference().child("Institution/" + model.institution +"/" + model.courseMain + "/groups/" + model.courseGroup +"/messages");
-        ref2 = model.database.getReference().child("notifications");
 
         adapter = new MessageAdapter( activity, ChatMessage.class, R.layout.item_in_message, ref);
         listView.setAdapter(adapter);
@@ -64,13 +63,6 @@ public class ChatFragment extends Fragment {
             if (!input.getText().toString().trim().equals("")) {
 
                 ref.push().setValue(new ChatMessage(
-                        input.getText().toString(),
-                        model.currentUser.getDisplayName(),
-                        model.userUid,
-                        model.currentCourse)
-                );
-
-                ref2.push().setValue(new ChatMessage(
                         input.getText().toString(),
                         model.currentUser.getDisplayName(),
                         model.userUid,

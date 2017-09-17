@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import shahar.shenkar.ourchat.Utils.AsyncHandler;
+import shahar.shenkar.ourchat.Utils.UiHandler;
 import shahar.shenkar.ourchat.objects.Model;
 
 public class WidgetConfigureActivity extends Activity {
@@ -39,7 +39,7 @@ public class WidgetConfigureActivity extends Activity {
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     TextView mAppWidgetText;
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+/*    View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             final Context context = WidgetConfigureActivity.this;
 
@@ -57,18 +57,18 @@ public class WidgetConfigureActivity extends Activity {
             setResult(RESULT_OK, resultValue);
             finish();
         }
-    };
+    };*/
 
     public WidgetConfigureActivity() {
         super();
     }
 
-    // Write the prefix to the SharedPreferences object for this widget
+    /*// Write the prefix to the SharedPreferences object for this widget
     static void saveTitlePref(Context context, int appWidgetId, String text) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
         prefs.apply();
-    }
+    }*/
 
     // Read the prefix from the SharedPreferences object for this widget.
     // If there is no preference saved, get the default from a resource
@@ -79,16 +79,6 @@ public class WidgetConfigureActivity extends Activity {
         });
 
         return title;
-    }
-
-    public void deleteTitlePref(int appWidgetId) {
-        AsyncHandler.post(() -> {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.remove(PREF_PREFIX_KEY + appWidgetId);
-            editor.apply();
-        });
-
     }
 
     @Override
@@ -113,19 +103,16 @@ public class WidgetConfigureActivity extends Activity {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(PREF_PREFIX_KEY + mAppWidgetId, mAppWidgetText.getText().toString());
                 editor.apply();
+                UiHandler.post(()->{
+                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                    Widget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+
+                    Intent resultValue = new Intent();
+                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+                    setResult(RESULT_OK, resultValue);
+                    finish();
+                });
             });
-
-            // It is the responsibility of the configuration activity to update the app widget
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            Widget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
-
-
-
-            // Make sure we pass back the original appWidgetId
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-            setResult(RESULT_OK, resultValue);
-            finish();
         });
 
 
